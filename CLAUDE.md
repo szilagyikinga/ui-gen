@@ -59,6 +59,7 @@ Next.js server actions for auth (signUp, signIn, signOut) and project CRUD.
 
 - Path alias: `@/*` maps to `src/*`
 - UI components use shadcn/ui (configured in `components.json`) with Radix primitives
+- Database schema is defined in `prisma/schema.prisma` — reference it for understanding stored data structure
 - Prisma client is generated to `src/generated/prisma/`
 - Tests are colocated in `__tests__/` directories next to source files
 - Test environment: jsdom with `@testing-library/react`
