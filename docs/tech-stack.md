@@ -13,6 +13,7 @@ UIGen is an AI-powered React component generator with live preview. Users descri
 - [Virtual File System](#virtual-file-system)
 - [Testing](#testing)
 - [Configuration](#configuration)
+- [Deployment](#deployment)
 
 ---
 
@@ -435,6 +436,62 @@ const nextConfig: NextConfig = {
 │  └──────────────┘    └──────────────────────────────────┘       │
 └─────────────────────────────────────────────────────────────────┘
 ```
+
+---
+
+## Deployment
+
+### Overview
+
+UIGen is deployed on [Railway](https://railway.app) as a containerized Next.js application with SQLite persisted on a mounted volume.
+
+### Platform
+
+| Component       | Details                                   |
+| --------------- | ----------------------------------------- |
+| **Host**        | Railway (container-based)                 |
+| **Database**    | SQLite on persistent volume (`/app/data`) |
+| **Auto-deploy** | Yes, on push to `main`                    |
+
+### Production Environment Variables
+
+| Variable            | Value                     | Purpose              |
+| ------------------- | ------------------------- | -------------------- |
+| `DATABASE_URL`      | `file:/app/data/prod.db`  | SQLite database path |
+| `ANTHROPIC_API_KEY` | `<your-api-key>`          | Claude API access    |
+| `JWT_SECRET`        | `<random-32-char-string>` | JWT signing secret   |
+| `NODE_ENV`          | `production`              | Production mode      |
+
+### Build Process
+
+The `package.json` build script handles Prisma setup:
+
+```json
+{
+  "postinstall": "prisma generate",
+  "build": "prisma generate && prisma migrate deploy && next build"
+}
+```
+
+### Deploying Updates
+
+Push to `main` — Railway auto-deploys:
+
+```bash
+git push origin main
+```
+
+### Database Migrations
+
+Migrations run automatically during build. For manual migration:
+
+```bash
+railway run npx prisma migrate deploy
+```
+
+### First-Time Setup
+
+See [deployment-plan.md](deployment-plan.md) for complete instructions.
 
 ---
 

@@ -65,3 +65,21 @@ Open [http://localhost:3000](http://localhost:3000)
 - Prisma with SQLite
 - Anthropic Claude AI
 - Vercel AI SDK
+
+## Deployment
+
+The project is deployed on [Railway](https://railway.app) with SQLite persisted on a mounted volume.
+
+### Deploying Updates
+
+Push to `main` branch — Railway auto-deploys on each push.
+
+```bash
+git push origin main
+```
+
+### Database Migrations
+
+After schema changes, migrations run automatically during build (`npm run build` includes `prisma migrate deploy`).
+
+See [docs/deployment-plan.md](docs/deployment-plan.md) for detailed first-time setup instructions.
